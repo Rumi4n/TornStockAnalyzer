@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using BlazorApp.Shared 
+@inject HttpClient Http
 
 <PageTitle>Index</PageTitle>
 
@@ -6,4 +8,59 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@if (stockRows == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Stock Name</th>
+            <th>Acronym</th>
+            <th>Dividend</th>
+            <th>Dividend value ($)</th>
+            <th>Dividend time</th>
+            <th>Shares</th>
+            <th>Share price ($)</th>
+            <th>Total cost ($)</th>
+            <th>ROI (%)</th>
+            <th>Yearly Profit</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var stockRow in stockRows)
+        {
+            <tr>
+                <td>@stockRow.Name</td>
+                <td>@stockRow.Acronym</td>
+                <td>@stockRow.Dividend</td>
+                <td>@stockRow.DividendValue</td>
+                <td>@stockRow.DividendTime</td>
+                <td>@stockRow.Shares</td>
+                <td>@stockRow.SharePrice</td>
+                <td>@stockRow.TotalCost</td>
+                <td>@stockRow.Roi</td>
+                <td>@stockRow.YearlyProfit</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private StockRow[] stockRows = new StockRow[]{};
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+}
