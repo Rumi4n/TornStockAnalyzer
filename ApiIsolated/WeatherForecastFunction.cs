@@ -11,10 +11,12 @@ namespace ApiIsolated
     public class HttpTrigger
     {
         private readonly ILogger _logger;
+        private readonly StockRepository _stockRepository;
 
         public HttpTrigger(ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<HttpTrigger>();
+            _stockRepository = new StockRepository();
         }
 
         [Function("WeatherForecast")]
@@ -41,16 +43,7 @@ namespace ApiIsolated
         {
             var randomNumber = new Random();
 
-            var result = Enumerable.Range(1, 5).Select(index => new StockRow()
-            {
-                Name = $"Stock {index}",
-                Acronym = $"ST{index}",
-                Dividend = $"Dividend {index}",
-                DividendTime = 7,
-                DividendValue = index * 1000,
-                Shares = index * 100000,
-                SharePrice = randomNumber.Next(50, 100)
-            }).ToArray();
+            var result = _stockRepository.GetStocks();
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.WriteAsJsonAsync(result);

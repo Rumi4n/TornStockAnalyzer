@@ -9,6 +9,8 @@ namespace BlazorApp.Shared
 
         public string Acronym { get; set; }
 
+        public bool IsActive { get; set; }
+
         public string Dividend { get; set; }
 
         public int DividendValue { get; set; }
