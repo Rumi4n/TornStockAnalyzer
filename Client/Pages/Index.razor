@@ -6,8 +6,6 @@
 
 <h1>Torn stock analyzer</h1>
 
-Welcome to your new app.
-
 @if (stockRows == null)
 {
     <p><em>Loading...</em></p>
@@ -31,7 +29,7 @@ else
         <tbody>
         @foreach (var stockRow in stockRows)
         {
-            <tr>
+            <tr class="iteration-@stockRow.Iteration">
                 <td>@stockRow.Name</td>
                 <td>@stockRow.Acronym</td>
                 <td>@stockRow.Dividend</td>
