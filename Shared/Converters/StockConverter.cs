@@ -44,7 +44,7 @@ namespace BlazorApp.Shared.Converters
             result.Add(GetRowFromRaw(raw.stocks._33));
             result.Add(GetRowFromRaw(raw.stocks._34));
 
-            return new List<StockRow>();
+            return result;
         }
 
         private StockRow GetRowFromRaw(StockRaw raw)
