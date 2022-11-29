@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlazorApp.Shared.Converters;
 using BlazorApp.Shared.Objects;
+using BlazorApp.Shared.Objects.Stock;
 using Newtonsoft.Json;
 
 namespace BlazorApp.Shared
@@ -21,10 +22,6 @@ namespace BlazorApp.Shared
 
         public async Task<List<StockRow>> GetStocks()
         {
-            var httpRequestMessage = new HttpRequestMessage(
-                HttpMethod.Get,
-                "https://api.torn.com/torn/?selections=stocks&key=GU4SSKbJAP0zxAex");
-
             using (var httpClient = new HttpClient())
             using(var httpResponse = await httpClient.GetAsync("https://api.torn.com/torn/?selections=stocks&key=GU4SSKbJAP0zxAex", HttpCompletionOption.ResponseHeadersRead))
             {
@@ -34,7 +31,7 @@ namespace BlazorApp.Shared
                 {
                     var result = await httpResponse.Content.ReadAsStringAsync();
                     var jsonDeserialized = JsonConvert.DeserializeObject<StockRaws>(result);
-                    return _converter.ConvertToRows(jsonDeserialized);
+                    return await _converter.ConvertToRows(jsonDeserialized);
                 }
                 catch // Could be ArgumentNullException or UnsupportedMediaTypeException
                 {

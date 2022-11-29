@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BlazorApp.Shared.Objects;
+using BlazorApp.Shared.Objects.Stock;
 
 namespace BlazorApp.Shared.Converters
 {
     internal class StockConverter
     {
-        public List<StockRow> ConvertToRows(StockRaws raw)
+        private Dictionary<int, int> _stockValueDictionary { get; } = new Dictionary<int, int>();
+
+        public async Task<List<StockRow>> ConvertToRows(StockRaws raw)
         {
             var result = new List<StockRow>();
+
+            await UpdateStockValues();
 
             result.Add(GetRowFromRaw(raw.stocks._1));
             result.Add(GetRowFromRaw(raw.stocks._2));
@@ -55,11 +62,55 @@ namespace BlazorApp.Shared.Converters
                 Acronym = raw.acronym,
                 IsActive = raw.benefit.type == "active",
                 Dividend = raw.benefit.description,
-                DividendValue = 1000,
+                DividendValue = _stockValueDictionary[raw.stock_id],
                 DividendTime = raw.benefit.frequency,
                 Shares = raw.benefit.requirement,
                 SharePrice = raw.current_price
             };
+        }
+
+        private async Task UpdateStockValues()
+        {
+            _stockValueDictionary.Clear();
+
+            var itemRepository = new ItemRepository();
+            var items = await itemRepository.GetItems();
+            var itemsValues = items.ToDictionary(x => x.Id, x => x.Value);
+
+            _stockValueDictionary.Add(1, 50000000);
+            _stockValueDictionary.Add(2, 0);
+            _stockValueDictionary.Add(3, 0);
+            _stockValueDictionary.Add(4, itemsValues[368]);
+            _stockValueDictionary.Add(5, 12000000);
+            _stockValueDictionary.Add(6, 4000000);
+            _stockValueDictionary.Add(7, itemsValues[365]);
+            _stockValueDictionary.Add(8, 0);
+            _stockValueDictionary.Add(9, 1000000);
+            _stockValueDictionary.Add(10, 80000000);
+            _stockValueDictionary.Add(11, 0);
+            _stockValueDictionary.Add(12, 25000000);
+            _stockValueDictionary.Add(13, 0);
+            _stockValueDictionary.Add(14, 0);
+            _stockValueDictionary.Add(15, itemsValues[367]);
+            _stockValueDictionary.Add(16, itemsValues[370]);
+            _stockValueDictionary.Add(17, itemsValues[369]);
+            _stockValueDictionary.Add(18, itemsValues[366]);
+            _stockValueDictionary.Add(19, itemsValues[364]);
+            _stockValueDictionary.Add(20, 0);
+            _stockValueDictionary.Add(21, 0);
+            _stockValueDictionary.Add(22, 111);
+            _stockValueDictionary.Add(23, 0);
+            _stockValueDictionary.Add(24, itemsValues[818]);
+            _stockValueDictionary.Add(25, 0);
+            _stockValueDictionary.Add(26, 0);
+            _stockValueDictionary.Add(27, 0);
+            _stockValueDictionary.Add(28, 0);
+            _stockValueDictionary.Add(29, 0);
+            _stockValueDictionary.Add(30, 0);
+            _stockValueDictionary.Add(31, 0);
+            _stockValueDictionary.Add(32, itemsValues[817]);
+            _stockValueDictionary.Add(33, 0);
+            _stockValueDictionary.Add(34, 0);
         }
     }
 }

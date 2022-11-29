@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BlazorApp.Shared.Objects
+namespace BlazorApp.Shared.Objects.Stock
 {
     public class StockListRaw
     {

@@ -1,4 +1,4 @@
-﻿namespace BlazorApp.Shared.Objects
+﻿namespace BlazorApp.Shared.Objects.Stock
 {
     public class StockRaws
     {
