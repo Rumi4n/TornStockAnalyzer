@@ -59,8 +59,9 @@ namespace BlazorApp.Api
             var stockRepository = new StockRepository();
 
             var result = await stockRepository.GetStocks();
+            var ordered = result.Where(x => x.DividendValue > 0).OrderByDescending(x => x.Roi).ToList();
 
-            return new OkObjectResult(result.ToArray());
+            return new OkObjectResult(ordered.ToArray());
         }
     }
 }
