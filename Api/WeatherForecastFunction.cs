@@ -92,7 +92,7 @@ namespace BlazorApp.Api
                 Dividend = row.Dividend,
                 DividendValue = row.DividendValue,
                 DividendTime = row.DividendTime,
-                Shares = row.Shares * Convert.ToInt16(Math.Pow(2, iteration)),
+                Shares = row.Shares * Convert.ToInt16(Math.Pow(2, iteration-1)),
                 SharePrice = row.SharePrice
             };
         }
