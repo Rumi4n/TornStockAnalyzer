@@ -1,4 +1,5 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Static Web Apps</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -7,12 +8,17 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+<div class="@NavMenuCssClass height-90" @onclick="ToggleNavMenu">
+    <nav class="flex-column flex-navigation">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
+        </div>
+        <div class="nav-item px-3 api-key-position">
+            <span class="oi oi-key api-key-icon" aria-hidden="true"></span>
+            API key
+            <input id="api-key-input" class="api-key-input">
         </div>
     </nav>
 </div>
