@@ -105,5 +105,8 @@ namespace BlazorApp.Shared.Objects.Stock
 
         [JsonProperty("34")]
         public StockRaw _34 { get; set; }
+
+        [JsonProperty("35")]
+        public StockRaw _35 { get; set; }
     }
 }

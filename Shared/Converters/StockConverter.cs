@@ -50,6 +50,7 @@ namespace BlazorApp.Shared.Converters
             result.Add(GetRowFromRaw(raw.stocks._32));
             result.Add(GetRowFromRaw(raw.stocks._33));
             result.Add(GetRowFromRaw(raw.stocks._34));
+            result.Add(GetRowFromRaw(raw.stocks._35));
 
             return result;
         }
@@ -111,6 +112,7 @@ namespace BlazorApp.Shared.Converters
             _stockValueDictionary.Add(32, itemsValues[817]);
             _stockValueDictionary.Add(33, 0);
             _stockValueDictionary.Add(34, 0);
+            _stockValueDictionary.Add(35, 4500000);
         }
     }
 }
