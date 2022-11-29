@@ -98,7 +98,7 @@ namespace BlazorApp.Shared.Converters
             _stockValueDictionary.Add(19, itemsValues[364]);
             _stockValueDictionary.Add(20, 0);
             _stockValueDictionary.Add(21, 0);
-            _stockValueDictionary.Add(22, 111);
+            _stockValueDictionary.Add(22, 45000000);
             _stockValueDictionary.Add(23, 0);
             _stockValueDictionary.Add(24, itemsValues[818]);
             _stockValueDictionary.Add(25, 0);
