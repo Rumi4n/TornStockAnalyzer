@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -51,15 +52,15 @@ namespace BlazorApp.Api
         }
 
         [FunctionName("TornStockAnalyze")]
-        public static IActionResult GetTornStockAnalyze(
+        public static async Task<IActionResult> GetTornStockAnalyze(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             var stockRepository = new StockRepository();
 
-            var result = stockRepository.GetStocks();
+            var result = await stockRepository.GetStocks();
 
-            return new OkObjectResult(result);
+            return new OkObjectResult(result.ToArray());
         }
     }
 }
