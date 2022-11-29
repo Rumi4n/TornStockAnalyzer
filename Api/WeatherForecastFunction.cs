@@ -55,18 +55,9 @@ namespace BlazorApp.Api
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var randomNumber = new Random();
+            var stockRepository = new StockRepository();
 
-            var result = Enumerable.Range(1, 5).Select(index => new StockRow()
-            {
-                Name = $"Stock {index}",
-                Acronym = $"ST{index}",
-                Dividend = $"Dividend {index}",
-                DividendTime = 7,
-                DividendValue = index * 1000,
-                Shares = index * 100000,
-                SharePrice = randomNumber.Next(50, 100)
-            }).ToArray();
+            var result = stockRepository.GetStocks();
 
             return new OkObjectResult(result);
         }
