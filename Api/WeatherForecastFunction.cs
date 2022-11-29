@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -58,10 +59,42 @@ namespace BlazorApp.Api
         {
             var stockRepository = new StockRepository();
 
-            var result = await stockRepository.GetStocks();
-            var ordered = result.Where(x => x.DividendValue > 0).OrderByDescending(x => x.Roi).ToList();
+            var stocks = await stockRepository.GetStocks();
+            var result = GetHigherIterations(stocks.Where(x => x.DividendValue > 0));
+            var ordered = result.OrderByDescending(x => x.Roi).ToList();
 
             return new OkObjectResult(ordered.ToArray());
+        }
+
+        private static List<StockRow> GetHigherIterations(IEnumerable<StockRow> originalRows)
+        {
+            var result = new List<StockRow>();
+
+            foreach (var row in originalRows)
+            {
+                result.Add(row);
+                result.Add(GetIncrementationFor(row, 2));
+                result.Add(GetIncrementationFor(row, 3));
+                result.Add(GetIncrementationFor(row, 4));
+            }
+
+            return result;
+        }
+
+        private static StockRow GetIncrementationFor(StockRow row, int iteration)
+        {
+            return new StockRow
+            {
+                Name = row.Name,
+                Iteration = iteration,
+                Acronym = row.Acronym,
+                IsActive = row.IsActive,
+                Dividend = row.Dividend,
+                DividendValue = row.DividendValue,
+                DividendTime = row.DividendTime,
+                Shares = row.Shares * Convert.ToInt16(Math.Pow(2, iteration)),
+                SharePrice = row.SharePrice
+            };
         }
     }
 }

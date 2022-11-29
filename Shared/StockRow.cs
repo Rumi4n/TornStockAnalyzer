@@ -8,6 +8,8 @@ namespace BlazorApp.Shared
     {
         public string Name{ get; set; }
 
+        public int Iteration { get; set; }
+
         public string Acronym { get; set; }
 
         public bool IsActive { get; set; }

@@ -60,6 +60,7 @@ namespace BlazorApp.Shared.Converters
             return new StockRow
             {
                 Name = raw.name,
+                Iteration = 1,
                 Acronym = raw.acronym,
                 IsActive = raw.benefit.type == "active",
                 Dividend = raw.benefit.description,
