@@ -18,12 +18,14 @@
         <div class="nav-item px-3 api-key-position">
             <span class="oi oi-key api-key-icon" aria-hidden="true"></span>
             API key
-            <input id="api-key-input" class="api-key-input">
+            <input type="text" @bind="@ApiKeyValue" @oninput="@((e) => { ApiKeyValue=(string)e.Value;})" id="api-key-input" class="api-key-input">
         </div>
     </nav>
 </div>
 
 @code {
+    public string ApiKeyValue { get; set; } = "";
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

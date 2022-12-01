@@ -4,7 +4,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Torn stock analyzer</h1>
+<h1>Torn stock analyzer (@teest)</h1>
 
 @if (stockRows == null)
 {
@@ -48,10 +48,16 @@ else
 @code {
     private StockRow[] stockRows = new StockRow[]{};
 
+    private string teest = "";
+
+    [CascadingParameter]
+    public MainLayout Layout { get; set; } 
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            teest = Layout.ApiKeyValueParent;
             stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
         }
         catch (Exception ex)
