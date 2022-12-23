@@ -1,4 +1,9 @@
-﻿
+﻿@using BlazorApp.Shared
+@using System.Timers;
+@implements IDisposable;
+
+@inject VariableNotifier Notifier
+
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Static Web Apps</a>
@@ -18,7 +23,7 @@
         <div class="nav-item px-3 api-key-position">
             <span class="oi oi-key api-key-icon" aria-hidden="true"></span>
             API key
-            <input type="text" @bind="@ApiKeyValue" @oninput="@((e) => { ApiKeyValue=(string)e.Value;})" id="api-key-input" class="api-key-input">
+            <input type="text" @bind="@ApiKeyValue" @bind:event="oninput" @onkeyup="@ResetTimer" id="api-key-input" class="api-key-input">
         </div>
     </nav>
 </div>
@@ -29,9 +34,31 @@
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private Timer aTimer = default!;
+
+    protected override void OnInitialized()
+    {
+        aTimer = new Timer(1000);
+        aTimer.Elapsed += OnUserFinish;
+        aTimer.AutoReset = false;
+    }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }  
+
+    private async void OnUserFinish(Object? source, ElapsedEventArgs e)
+    {
+        Notifier.UpdateApiValue(ApiKeyValue);
+        StateHasChanged();
     }
+
+    void ResetTimer(KeyboardEventArgs e)
+    {
+        aTimer.Stop();
+        aTimer.Start();        
+    }  
+
+    void IDisposable.Dispose() => aTimer?.Dispose();
 }

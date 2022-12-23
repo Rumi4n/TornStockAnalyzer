@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using BlazorApp.Shared 
-@inject HttpClient Http
+@inject HttpClient Http    
+@implements IDisposable
+@inject VariableNotifier Notifier
 
 <PageTitle>Index</PageTitle>
 
@@ -50,19 +52,37 @@ else
 
     private string teest = "";
 
-    [CascadingParameter]
-    public MainLayout Layout { get; set; } 
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        try
-        {
-            teest = Layout.ApiKeyValueParent;
-            stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
+        Notifier.Notify += OnNotify;
     }
+
+
+    public void Dispose()
+    {
+        Notifier.Notify -= OnNotify;
+    } 
+    
+    public async Task OnNotify()
+    {
+        await InvokeAsync(async () =>
+        {
+            teest = Notifier.ApiKey;
+            stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
+            StateHasChanged();
+        });
+    }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    try
+    //    {
+    //        stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine(ex.ToString());
+    //    }
+    //}
 }
