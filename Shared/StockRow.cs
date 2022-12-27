@@ -6,7 +6,9 @@ namespace BlazorApp.Shared
 {
     public class StockRow
     {
-        public string Name{ get; set; }
+        public int StockId { get; set; }
+
+        public string Name { get; set; }
 
         public int Iteration { get; set; }
 
@@ -39,5 +41,7 @@ namespace BlazorApp.Shared
         public decimal YearlyProfit => DividendValue / DividendTime * 365;
 
         public string YearlyProfitString => YearlyProfit.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
+        
+        public bool IsOwned { get; set; }
     }
 }

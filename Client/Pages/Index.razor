@@ -31,7 +31,7 @@ else
         <tbody>
         @foreach (var stockRow in stockRows)
         {
-            <tr class="iteration-@stockRow.Iteration">
+            <tr class="@(@stockRow.IsOwned ? "owned" : "not-owned") iteration-@stockRow.Iteration">
                 <td>@stockRow.Name</td>
                 <td>@stockRow.Acronym</td>
                 <td>@stockRow.Dividend</td>

@@ -43,7 +43,7 @@ namespace ApiIsolated
         {
             var randomNumber = new Random();
 
-            var result = _stockRepository.GetStocks();
+            var result = _stockRepository.GetAllStocksInfo();
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.WriteAsJsonAsync(result);

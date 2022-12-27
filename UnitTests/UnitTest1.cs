@@ -13,20 +13,28 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            _uut = new StockRepository();
+            _uut = new StockRepository("GU4SSKbJAP0zxAex");
             _uut2 = new ItemRepository();
         }
 
         [Test]
         public async Task Test1()
         {
-            var result = await _uut.GetStocks();
+            var result = await _uut.GetAllStocksInfo();
 
             Assert.AreEqual("hello", result);
         }
 
         [Test]
         public async Task Test2()
+        {
+            var result = await _uut.GetOwnedStocks();
+
+            Assert.AreEqual("hello", result);
+        }
+
+        [Test]
+        public async Task Test3()
         {
             var result = await _uut2.GetItems();
 

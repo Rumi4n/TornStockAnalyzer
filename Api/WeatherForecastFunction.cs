@@ -57,14 +57,32 @@ namespace BlazorApp.Api
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var stockRepository = new StockRepository();
-            
-            var stocks = await stockRepository.GetStocks();
+            var apiKey = req.Query["key"].ToString();
+
+            var stockRepository = new StockRepository(apiKey);
+            var stocks = await stockRepository.GetAllStocksInfo();
             var result = GetHigherIterations(stocks.Where(x => x.DividendValue > 0));
+
+            var ownedStocks = await stockRepository.GetOwnedStocks();
+            ownedStocks.First().Iteration = 3;
+            MarkOwnedStocks(result, ownedStocks);
+                
             var ordered = result.OrderByDescending(x => x.Roi).ToList();
-            ordered.First().Name = req.Query["key"].ToString();
 
             return new OkObjectResult(ordered.ToArray());
+        }
+
+        private static void MarkOwnedStocks(List<StockRow> result, List<OwnedStockRow> ownedStocks)
+        {
+            ownedStocks.ForEach(owned =>
+            {
+                var ownedRows = result.Where(stock =>
+                    stock.StockId == owned.StockId && stock.Iteration <= owned.Iteration);
+                foreach (var ownedRow in ownedRows)
+                {
+                    ownedRow.IsOwned = true;
+                }
+            });
         }
 
         private static List<StockRow> GetHigherIterations(IEnumerable<StockRow> originalRows)

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlazorApp.Shared.Objects;
 using BlazorApp.Shared.Objects.Stock;
 
 namespace BlazorApp.Shared.Converters
@@ -59,6 +58,7 @@ namespace BlazorApp.Shared.Converters
         {
             return new StockRow
             {
+                StockId = raw.stock_id,
                 Name = raw.name,
                 Iteration = 1,
                 Acronym = raw.acronym,
@@ -68,6 +68,67 @@ namespace BlazorApp.Shared.Converters
                 DividendTime = raw.benefit.frequency,
                 Shares = raw.benefit.requirement,
                 SharePrice = raw.current_price
+            };
+        }
+
+        public async Task<List<OwnedStockRow>> ConvertToRows(OwnedStockRaws raw)
+        {
+            var result = new List<OwnedStockRow>();
+
+            await UpdateStockValues();
+            
+            AddIfNotNull(result, raw.stocks._1);
+            AddIfNotNull(result, raw.stocks._2);
+            AddIfNotNull(result, raw.stocks._3);
+            AddIfNotNull(result, raw.stocks._4);
+            AddIfNotNull(result, raw.stocks._5);
+            AddIfNotNull(result, raw.stocks._6);
+            AddIfNotNull(result, raw.stocks._7);
+            AddIfNotNull(result, raw.stocks._8);
+            AddIfNotNull(result, raw.stocks._9);
+            AddIfNotNull(result, raw.stocks._10);
+            AddIfNotNull(result, raw.stocks._11);
+            AddIfNotNull(result, raw.stocks._12);
+            AddIfNotNull(result, raw.stocks._13);
+            AddIfNotNull(result, raw.stocks._14);
+            AddIfNotNull(result, raw.stocks._15);
+            AddIfNotNull(result, raw.stocks._16);
+            AddIfNotNull(result, raw.stocks._17);
+            AddIfNotNull(result, raw.stocks._18);
+            AddIfNotNull(result, raw.stocks._19);
+            AddIfNotNull(result, raw.stocks._20);
+            AddIfNotNull(result, raw.stocks._21);
+            AddIfNotNull(result, raw.stocks._22);
+            AddIfNotNull(result, raw.stocks._23);
+            AddIfNotNull(result, raw.stocks._24);
+            AddIfNotNull(result, raw.stocks._25);
+            AddIfNotNull(result, raw.stocks._26);
+            AddIfNotNull(result, raw.stocks._27);
+            AddIfNotNull(result, raw.stocks._28);
+            AddIfNotNull(result, raw.stocks._29);
+            AddIfNotNull(result, raw.stocks._30);
+            AddIfNotNull(result, raw.stocks._31);
+            AddIfNotNull(result, raw.stocks._32);
+            AddIfNotNull(result, raw.stocks._33);
+            AddIfNotNull(result, raw.stocks._34);
+            AddIfNotNull(result, raw.stocks._35);
+
+            return result;
+        }
+
+        private void AddIfNotNull(List<OwnedStockRow> result, OwnedStockRaw raw)
+        {
+            if (raw == null) return;
+
+            result.Add(GetRowFromRaw(raw));
+        }
+
+        private OwnedStockRow GetRowFromRaw(OwnedStockRaw raw)
+        {
+            return new OwnedStockRow
+            {
+                StockId = raw.stock_id,
+                Iteration = raw.dividend.increment
             };
         }
 
