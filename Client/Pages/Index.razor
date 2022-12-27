@@ -6,7 +6,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Torn stock analyzer (@teest)</h1>
+<h1>Torn stock analyzer</h1>
 
 @if (stockRows == null)
 {
@@ -50,8 +50,6 @@ else
 @code {
     private StockRow[] stockRows = new StockRow[]{};
 
-    private string teest = "";
-
 
     protected override void OnInitialized()
     {
@@ -68,21 +66,9 @@ else
     {
         await InvokeAsync(async () =>
         {
-            teest = Notifier.ApiKey;
-            stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
+            // Notifier.ApiKey;
+            stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze?key=" + Notifier.ApiKey) ?? new StockRow[]{};
             StateHasChanged();
         });
     }
-
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    try
-    //    {
-    //        stockRows = await Http.GetFromJsonAsync<StockRow[]>("/api/TornStockAnalyze") ?? new StockRow[]{};
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine(ex.ToString());
-    //    }
-    //}
 }
