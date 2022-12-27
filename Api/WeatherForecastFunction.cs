@@ -64,7 +64,6 @@ namespace BlazorApp.Api
             var result = GetHigherIterations(stocks.Where(x => x.DividendValue > 0));
 
             var ownedStocks = await stockRepository.GetOwnedStocks();
-            ownedStocks.First().Iteration = 3;
             MarkOwnedStocks(result, ownedStocks);
                 
             var ordered = result.OrderByDescending(x => x.Roi).ToList();
@@ -72,7 +71,7 @@ namespace BlazorApp.Api
             return new OkObjectResult(ordered.ToArray());
         }
 
-        private static void MarkOwnedStocks(List<StockRow> result, List<OwnedStockRow> ownedStocks)
+        public static void MarkOwnedStocks(List<StockRow> result, List<OwnedStockRow> ownedStocks)
         {
             ownedStocks.ForEach(owned =>
             {

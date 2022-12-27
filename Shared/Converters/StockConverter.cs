@@ -74,8 +74,6 @@ namespace BlazorApp.Shared.Converters
         public async Task<List<OwnedStockRow>> ConvertToRows(OwnedStockRaws raw)
         {
             var result = new List<OwnedStockRow>();
-
-            await UpdateStockValues();
             
             AddIfNotNull(result, raw.stocks._1);
             AddIfNotNull(result, raw.stocks._2);
@@ -128,7 +126,7 @@ namespace BlazorApp.Shared.Converters
             return new OwnedStockRow
             {
                 StockId = raw.stock_id,
-                Iteration = raw.dividend.increment
+                Iteration = 3// raw.dividend.increment
             };
         }
 
