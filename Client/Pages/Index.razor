@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/{ApiKey}"
 @using BlazorApp.Shared 
 @inject HttpClient Http    
 @implements IDisposable
@@ -48,12 +49,20 @@ else
 }
 
 @code {
+    [Parameter]
+    public string ApiKey { get; set; }
+
     private StockRow[] stockRows = new StockRow[]{};
 
 
     protected override void OnInitialized()
     {
         Notifier.Notify += OnNotify;
+
+        if (!string.IsNullOrEmpty(ApiKey))
+        {
+            Notifier.UpdateApiValue(ApiKey);
+        }
     }
 
 

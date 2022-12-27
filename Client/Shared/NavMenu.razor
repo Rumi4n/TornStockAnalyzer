@@ -41,6 +41,8 @@
         aTimer = new Timer(1000);
         aTimer.Elapsed += OnUserFinish;
         aTimer.AutoReset = false;
+
+        Notifier.Notify += OnNotify;
     }
 
     private void ToggleNavMenu()
@@ -58,7 +60,16 @@
     {
         aTimer.Stop();
         aTimer.Start();        
-    }  
+    }
 
-    void IDisposable.Dispose() => aTimer?.Dispose();
+    public async Task OnNotify()
+    {
+        ApiKeyValue = Notifier.ApiKey;
+    }
+
+    void IDisposable.Dispose()
+    {
+        aTimer?.Dispose();
+        Notifier.Notify -= OnNotify;
+    }
 }
