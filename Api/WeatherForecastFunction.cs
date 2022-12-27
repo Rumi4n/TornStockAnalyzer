@@ -55,7 +55,6 @@ namespace BlazorApp.Api
         [FunctionName("TornStockAnalyze")]
         public static async Task<IActionResult> GetTornStockAnalyze(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-            [FromQuery(Name="key")] string apiKey,
             ILogger log)
         {
             var stockRepository = new StockRepository();
@@ -63,8 +62,7 @@ namespace BlazorApp.Api
             var stocks = await stockRepository.GetStocks();
             var result = GetHigherIterations(stocks.Where(x => x.DividendValue > 0));
             var ordered = result.OrderByDescending(x => x.Roi).ToList();
-            ordered.First().Name = apiKey;
-            ordered.Last().Name = req.Query["key"];
+            ordered.First().Name = req.Query["key"].ToString();
 
             return new OkObjectResult(ordered.ToArray());
         }
