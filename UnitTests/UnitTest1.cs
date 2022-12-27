@@ -45,6 +45,21 @@ namespace UnitTests
         }
 
         [Test]
+        public async Task TestX()
+        {
+            var stocks = await _uut.GetAllStocksInfo();
+            var owned = await _uut.GetOwnedStocks();
+
+            var higher = WeatherForecastFunction.GetHigherIterations(stocks.Where(x => x.DividendValue > 0));
+
+            WeatherForecastFunction.MarkOwnedStocks(higher, owned);
+
+            var ownedComputed = higher.Where(x => x.IsOwned).ToList();
+
+            Assert.AreEqual("hello", higher.First().Name);
+        }
+
+        [Test]
         public async Task Test4()
         {
             var stockRows = new List<StockRow>();

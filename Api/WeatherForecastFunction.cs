@@ -84,7 +84,7 @@ namespace BlazorApp.Api
             });
         }
 
-        private static List<StockRow> GetHigherIterations(IEnumerable<StockRow> originalRows)
+        public static List<StockRow> GetHigherIterations(IEnumerable<StockRow> originalRows)
         {
             var result = new List<StockRow>();
 
@@ -103,6 +103,7 @@ namespace BlazorApp.Api
         {
             return new StockRow
             {
+                StockId = row.StockId,
                 Name = row.Name,
                 Iteration = iteration,
                 Acronym = row.Acronym,
