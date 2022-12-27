@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlazorApp.Shared.Objects.OwnedStock;
 using BlazorApp.Shared.Objects.Stock;
+using BlazorApp.Shared.Repositories;
 
 namespace BlazorApp.Shared.Converters
 {
@@ -126,7 +128,7 @@ namespace BlazorApp.Shared.Converters
             return new OwnedStockRow
             {
                 StockId = raw.stock_id,
-                Iteration = 3// raw.dividend.increment
+                Iteration = raw.dividend.increment
             };
         }
 

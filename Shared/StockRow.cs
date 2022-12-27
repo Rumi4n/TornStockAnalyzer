@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Xml.Schema;
+﻿using System.Globalization;
 
 namespace BlazorApp.Shared
 {

@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
 using BlazorApp.Shared;
+using BlazorApp.Shared.Repositories;
 
 namespace BlazorApp.Api
 {

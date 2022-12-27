@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using BlazorApp.Shared;
+using BlazorApp.Shared.Repositories;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlazorApp.Api;
 using BlazorApp.Shared;
+using BlazorApp.Shared.Converters;
+using BlazorApp.Shared.Repositories;
 using NUnit.Framework;
 
 namespace UnitTests
