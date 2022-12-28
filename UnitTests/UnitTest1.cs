@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorApp.Api;
 using BlazorApp.Shared;
-using BlazorApp.Shared.Converters;
 using BlazorApp.Shared.Repositories;
 using NUnit.Framework;
 
@@ -18,9 +16,9 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            //_uut = new StockRepository("GU4SSKbJAP0zxAex");
-            _uut = new StockRepository("JA6KvT5w3Ltp13TJ");
-            _uut2 = new ItemRepository();
+            _uut = new StockRepository("GU4SSKbJAP0zxAex");
+            // _uut = new StockRepository("JA6KvT5w3Ltp13TJ");
+            _uut2 = new ItemRepository("GU4SSKbJAP0zxAex");
         }
 
         [Test]

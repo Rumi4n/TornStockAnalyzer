@@ -17,7 +17,7 @@ namespace BlazorApp.Shared.Repositories
 
         public StockRepository(string apiKey)
         {
-            _converter = new StockConverter();
+            _converter = new StockConverter(apiKey);
             _apiKey = apiKey;
         }
 

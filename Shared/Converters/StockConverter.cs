@@ -11,6 +11,13 @@ namespace BlazorApp.Shared.Converters
     {
         private Dictionary<int, int> _stockValueDictionary { get; } = new Dictionary<int, int>();
 
+        private readonly string _apiKey;
+
+        public StockConverter(string apiKey)
+        {
+            _apiKey = apiKey;
+        }
+
         public async Task<List<StockRow>> ConvertToRows(StockRaws raw)
         {
             var result = new List<StockRow>();
@@ -136,7 +143,7 @@ namespace BlazorApp.Shared.Converters
         {
             _stockValueDictionary.Clear();
 
-            var itemRepository = new ItemRepository();
+            var itemRepository = new ItemRepository(_apiKey);
             var items = await itemRepository.GetItems();
             var itemsValues = items.ToDictionary(x => x.Id, x => x.Value);
 

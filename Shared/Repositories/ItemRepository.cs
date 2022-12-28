@@ -11,15 +11,18 @@ namespace BlazorApp.Shared.Repositories
     {
         private readonly ItemConverter _converter;
 
-        public ItemRepository()
+        private readonly string _apiKey;
+
+        public ItemRepository(string apiKey)
         {
             _converter = new ItemConverter();
+            _apiKey = apiKey;
         }
 
         public async Task<List<ItemRow>> GetItems()
         {
             using (var httpClient = new HttpClient())
-            using (var httpResponse = await httpClient.GetAsync($"https://api.torn.com/torn/368,365,367,370,369,366,364,818,817?selections=items&key=GU4SSKbJAP0zxAex", HttpCompletionOption.ResponseHeadersRead))
+            using (var httpResponse = await httpClient.GetAsync($"https://api.torn.com/torn/368,365,367,370,369,366,364,818,817?selections=items&key={_apiKey}", HttpCompletionOption.ResponseHeadersRead))
             {
                 httpResponse.EnsureSuccessStatusCode();
 
