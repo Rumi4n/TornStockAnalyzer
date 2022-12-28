@@ -18,7 +18,8 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            _uut = new StockRepository("GU4SSKbJAP0zxAex");
+            //_uut = new StockRepository("GU4SSKbJAP0zxAex");
+            _uut = new StockRepository("JA6KvT5w3Ltp13TJ");
             _uut2 = new ItemRepository();
         }
 

@@ -118,7 +118,7 @@ namespace BlazorApp.Shared.Converters
 
         private void AddIfNotNull(List<OwnedStockRow> result, OwnedStockRaw raw)
         {
-            if (raw == null) return;
+            if (raw?.dividend == null) return;
 
             result.Add(GetRowFromRaw(raw));
         }
